@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Expert Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-mark">▲</span>
+      <span class="brand-name">AI Expert</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="dashboard">
+        <span class="nav-icon">◈</span>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-tab="trilha">
+        <span class="nav-icon">◎</span>
+        <span>Trilha</span>
+      </button>
+      <button class="nav-item" data-tab="roadmap">
+        <span class="nav-icon">◐</span>
+        <span>Roadmap</span>
+      </button>
+      <button class="nav-item" data-tab="flashcards">
+        <span class="nav-icon">◇</span>
+        <span>Flashcards</span>
+      </button>
+      <button class="nav-item" data-tab="quiz">
+        <span class="nav-icon">◉</span>
+        <span>Quiz</span>
+      </button>
+      <button class="nav-item" data-tab="recursos">
+        <span class="nav-icon">◫</span>
+        <span>Recursos</span>
+      </button>
+      <button class="nav-item" data-tab="diario">
+        <span class="nav-icon">◳</span>
+        <span>Diário</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="profile-chip">
+        <div class="profile-avatar">EU</div>
+        <div class="profile-info">
+          <div class="profile-name">Especialista em IA</div>
+          <div class="profile-level">Nível Avançado</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-center">
+        <span class="topbar-title" id="topbar-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="streak-chip">🔥 <span id="streak-val">6</span> dias</span>
+      </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="tab-content">
+
+      <!-- ═══════════════ DASHBOARD ═══════════════ -->
+      <section class="tab active" id="tab-dashboard">
+        <div class="page-header">
+          <h1 class="page-title">Olá, bom estudo hoje!</h1>
+          <p class="page-sub">LLMs & IA Generativa · Agentes de IA · 4–7h/semana</p>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Progresso geral</div>
+            <div class="metric-value accent">8%</div>
+            <div class="metric-sub">2 de 26 módulos</div>
+            <div class="metric-bar"><div class="metric-fill" style="width:8%"></div></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Esta semana</div>
+            <div class="metric-value">5h20</div>
+            <div class="metric-sub">meta: 6h/semana</div>
+            <div class="metric-bar"><div class="metric-fill" style="width:88%"></div></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Streak</div>
+            <div class="metric-value">🔥 6</div>
+            <div class="metric-sub">dias consecutivos</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Fase atual</div>
+            <div class="metric-value" style="font-size:1.1rem">LLMs</div>
+            <div class="metric-sub">Mês 1–2 de 6</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Atividade recente</span>
+              <span class="card-badge">21 dias</span>
+            </div>
+            <div id="heatmap" class="heatmap"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Próximos módulos</span>
+            </div>
+            <div id="next-modules" class="module-list"></div>
+          </div>
+        </div>
+
+        <div class="card tip-card">
+          <div class="tip-icon">💡</div>
+          <div>
+            <div class="tip-label">Foco desta semana</div>
+            <div class="tip-text" id="tip-text"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ TRILHA ═══════════════ -->
+      <section class="tab" id="tab-trilha">
+        <div class="page-header">
+          <h1 class="page-title">Trilha de Estudo</h1>
+          <p class="page-sub">Plano de 6 meses · ~5h/semana · Nível avançado</p>
+        </div>
+        <div id="tracks-container"></div>
+      </section>
+
+      <!-- ═══════════════ ROADMAP ═══════════════ -->
+      <section class="tab" id="tab-roadmap">
+        <div class="page-header">
+          <h1 class="page-title">Roadmap</h1>
+          <p class="page-sub">Visão de 6 meses com entregas concretas</p>
+        </div>
+        <div class="roadmap-timeline" id="roadmap-container"></div>
+      </section>
+
+      <!-- ═══════════════ FLASHCARDS ═══════════════ -->
+      <section class="tab" id="tab-flashcards">
+        <div class="page-header">
+          <h1 class="page-title">Flashcards</h1>
+          <p class="page-sub">Revise conceitos avançados com spaced repetition</p>
+        </div>
+
+        <div class="fc-controls">
+          <div class="select-wrap">
+            <select id="fc-deck-select" onchange="FC.loadDeck()">
+              <option value="0">Arquitetura de LLMs</option>
+              <option value="1">Fine-tuning & PEFT</option>
+              <option value="2">RAG avançado</option>
+              <option value="3">Agentes & ReAct</option>
+              <option value="4">MLOps & Deploy</option>
+            </select>
+          </div>
+          <div class="fc-stats">
+            <span class="fc-stat ok" id="fc-ok-count">✓ 0</span>
+            <span class="fc-stat no" id="fc-no-count">✗ 0</span>
+            <span class="fc-stat neutral" id="fc-counter">1/5</span>
+          </div>
+        </div>
+
+        <div class="fc-scene">
+          <div class="fc-card" id="fc-card" onclick="FC.flip()">
+            <div class="fc-face fc-front">
+              <div class="fc-face-label">Conceito</div>
+              <div class="fc-question" id="fc-q"></div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-face-label">Explicação</div>
+              <div class="fc-answer" id="fc-a"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fc-hint" id="fc-hint">clique no card para revelar</div>
+
+        <div class="fc-actions" id="fc-reveal-btn">
+          <button class="btn btn-outline" onclick="FC.flip()">Revelar resposta</button>
+        </div>
+
+        <div class="fc-actions" id="fc-rate-btns" style="display:none">
+          <button class="btn btn-danger" onclick="FC.rate(false)">✗ Rever</button>
+          <button class="btn btn-outline" onclick="FC.skip()">Pular →</button>
+          <button class="btn btn-success" onclick="FC.rate(true)">✓ Dominei</button>
+        </div>
+      </section>
+
+      <!-- ═══════════════ QUIZ ═══════════════ -->
+      <section class="tab" id="tab-quiz">
+        <div class="page-header">
+          <h1 class="page-title">Quiz</h1>
+          <p class="page-sub">Questões técnicas de nível sênior</p>
+        </div>
+
+        <div class="quiz-controls">
+          <div class="select-wrap">
+            <select id="quiz-deck-select" onchange="QZ.load()">
+              <option value="0">LLMs & Transformers</option>
+              <option value="1">Fine-tuning & Alinhamento</option>
+              <option value="2">Agentes & RAG</option>
+              <option value="3">MLOps & Produção</option>
+            </select>
+          </div>
+          <div class="quiz-score-chip" id="quiz-score-chip">0 pts</div>
+        </div>
+
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <div class="quiz-progress-label" id="quiz-progress-label">Questão 1 de 4</div>
+
+        <div class="card quiz-card">
+          <div class="quiz-q" id="quiz-q"></div>
+          <div class="quiz-opts" id="quiz-opts"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+          <div class="quiz-footer">
+            <button class="btn btn-primary" id="quiz-next-btn" onclick="QZ.next()" style="display:none">Próxima questão →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ RECURSOS ═══════════════ -->
+      <section class="tab" id="tab-recursos">
+        <div class="page-header">
+          <h1 class="page-title">Recursos</h1>
+          <p class="page-sub">Papers, ferramentas, cursos e livros curados</p>
+        </div>
+
+        <div class="filter-row" id="res-filters">
+          <button class="filter-btn active" onclick="RES.filter(this,'todos')">Todos</button>
+          <button class="filter-btn" onclick="RES.filter(this,'paper')">Papers</button>
+          <button class="filter-btn" onclick="RES.filter(this,'ferramenta')">Ferramentas</button>
+          <button class="filter-btn" onclick="RES.filter(this,'curso')">Cursos</button>
+          <button class="filter-btn" onclick="RES.filter(this,'livro')">Livros</button>
+        </div>
+
+        <div class="resources-grid" id="resources-list"></div>
+      </section>
+
+      <!-- ═══════════════ DIÁRIO ═══════════════ -->
+      <section class="tab" id="tab-diario">
+        <div class="page-header">
+          <h1 class="page-title">Diário de Estudos</h1>
+          <p class="page-sub">Registre seus aprendizados, insights e experimentos</p>
+        </div>
+
+        <div class="card journal-form">
+          <div class="journal-form-header">Nova entrada</div>
+          <textarea id="journal-input" class="journal-textarea" placeholder="O que você estudou hoje? Insights, dúvidas, experimentos, resultados..."></textarea>
+          <div class="tag-row" id="journal-tag-row">
+            <button class="tag-pill" onclick="toggleTag(this)">LLMs</button>
+            <button class="tag-pill" onclick="toggleTag(this)">Fine-tuning</button>
+            <button class="tag-pill" onclick="toggleTag(this)">RAG</button>
+            <button class="tag-pill" onclick="toggleTag(this)">Agentes</button>
+            <button class="tag-pill" onclick="toggleTag(this)">Paper</button>
+            <button class="tag-pill" onclick="toggleTag(this)">Projeto</button>
+            <button class="tag-pill" onclick="toggleTag(this)">Experimento</button>
+          </div>
+          <button class="btn btn-primary" onclick="JOURNAL.save()">Salvar entrada</button>
+        </div>
+
+        <div class="journal-entries" id="journal-entries">
+          <div class="empty-state">
+            <div class="empty-icon">◳</div>
+            <div>Nenhuma entrada ainda.</div>
+            <div class="empty-sub">Comece a registrar seu aprendizado acima.</div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /tab-content -->
+  </main>
+
+  <!-- MODULE MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-tag" id="modal-tag"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-topics" id="modal-topics"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-section-label">Recursos sugeridos</div>
+      <div class="modal-resources" id="modal-resources"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-section-label">Exercícios práticos</div>
+      <div class="modal-exercises" id="modal-exercises"></div>
+      <div class="modal-footer">
+        <span class="modal-hours" id="modal-hours"></span>
+        <button class="btn btn-primary" onclick="closeModal()">Entendido ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
